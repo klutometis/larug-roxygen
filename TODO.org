@@ -1,0 +1,301 @@
+* TODO Some relatively interesting but elegant algorithm
+  Have we exhausted SICP? Monte Carlo pi; some iterative derivative;
+  maybe a Knuthian random number generator based on some magical
+  co-primes (i.e. linear congruential method); Neumann's
+  middle-squares.
+
+  Linear congruential: $X_{n+1} = (aX_n + c) \mod{m}$.
+
+  Relatively interesting example in the sense: can have a flat version
+  which requires e.g. =previous-random= (i.e. =seed=) and a class
+  (throw in R4 and reference classes, for the hell of it); we have
+  default parameters, too (becoming class variables, for the
+  assholes).
+
+  We could even ask the audience which [[http://en.wikipedia.org/wiki/Linear_congruential_generator#Parameters_in_common_use][parameters]] they'd prefer:
+  Knuth, Apple, Java, glibc, &c.?
+
+  #+BEGIN_SRC R :tangle linear-congruence.R :shebang #!/usr/local/bin/R -f
+    ## The sort of thing we could package into a class (closure) with
+    ## e.g. parameters; problem is: class stuff is so gad-damned
+    ## distasteful.
+    
+    ## Always get chided for my use of dots; pathological example with m =
+    ## 10 and X_0 = a = c = 7; also: X_{n+1} = (a * X_n + c) mod m.
+    next.random <- function(prev.random, modulus, multiplier, increment)
+      (multiplier * prev.random + increment) %% modulus
+    
+    next.random(7, 10, 7, 7)
+    
+    randoms <- function(init.random, modulus, multiplier, increment, n, randoms=NULL) {
+      if (n == 0)
+        randoms
+      else {
+        random = next.random(init.random, modulus, multiplier, increment)
+        randoms(random, modulus, multiplier, increment, n - 1, c(random, randoms))
+      }    
+    }
+    
+    randoms(7, 10, 7, 7, 8)
+    
+    nth.random <- function(seed, m, a, c, n=0) {
+      if (n == 0)
+        seed
+      else
+        nth.random(next.random(seed, m, a, c), m, a, c, n - 1)
+    }
+    
+    nth.random(7, 10, 7, 7)
+    nth.random(7, 10, 7, 7, 1)
+    nth.random(7, 10, 7, 7, 2)
+    nth.random(7, 10, 7, 7, 3)
+    nth.random(7, 10, 7, 7, 4)
+    nth.random(7, 10, 7, 7, 5)
+    nth.random(7, 10, 7, 7, 6)
+    
+    setClass('random',
+             representation(seed='numeric',
+                            m='numeric',
+                            a='numeric',
+                            c='numeric'),
+             prototype(m=2**32,
+                       a=1664525,
+                       c=1013904223))
+    
+    setMethod('initialize',
+              'random',
+              function(.Object, seed) {
+                .Object@seed <- seed
+                .Object
+              })
+    
+    setGeneric('nextr',
+               function(.Object) standardGeneric('nextr'))
+    
+    setMethod('nextr',
+              'random',
+              function(.Object) {
+                .Object@seed <-
+                  next.random(.Object@seed,
+                              .Object@m,
+                              .Object@a,
+                              .Object@c)
+                .Object
+              })
+    
+    r <- new('random', seed=19)
+    r <- nextr(r)
+    r <- nextr(r)
+    r <- nextr(r)
+    r@seed
+    
+    setRefClass('random',
+                fields=list(seed='numeric',
+                  m='numeric',
+                  a='numeric',
+                  c='numeric'),
+                methods=list(
+                  nextr=function() {
+                    seed <<- next.random(seed, m, a, c)
+                  }))
+    
+    
+  #+END_SRC
+
+  We also need a package, of course; start with a package for roxygen?
+  Need to, I think.
+
+  https://github.com/hadley/devtools/wiki/R5, by the way.
+
+  #+BEGIN_SRC R :tangle s3.R :shebang #!/usr/local/bin/R -f
+    'harro'
+  #+END_SRC
+
+  #+BEGIN_SRC R :tangle s4.R :shebang #!/usr/local/bin/R -f
+    next.random <- function(prev.random, modulus, multiplier, increment)
+      (multiplier * prev.random + increment) %% modulus
+    
+    setClass('random',
+             representation(seed='numeric',
+                            m='numeric',
+                            a='numeric',
+                            c='numeric'),
+             prototype(m=2**32,
+                       a=1664525,
+                       c=1013904223))
+    
+    setMethod('initialize',
+              'random',
+              function(.Object, seed) {
+                .Object@seed <- seed
+                .Object
+              })
+    
+    setGeneric('nextr',
+               function(.Object) standardGeneric('nextr'))
+    
+    setMethod('nextr',
+              'random',
+              function(.Object) {
+                .Object@seed <-
+                  next.random(.Object@seed,
+                              .Object@m,
+                              .Object@a,
+                              .Object@c)
+                .Object
+              })
+    
+    r <- new('random', seed=19)
+    r <- nextr(r)
+    r <- nextr(r)
+    r <- nextr(r)
+    r@seed
+    
+  #+END_SRC
+
+  #+BEGIN_SRC R :tangle r5.R :shebang #!/usr/local/bin/R -f
+    next.random <- function(prev.random, modulus, multiplier, increment)
+      (multiplier * prev.random + increment) %% modulus
+    
+    setRefClass('random',
+                fields=list(seed='numeric',
+                  m='numeric',
+                  a='numeric',
+                  c='numeric'),
+                methods=list(
+                  nextr=function() {
+                    seed <<- next.random(seed, m, a, c)
+                  }))
+    
+    
+  #+END_SRC
+
+  http://tolstoy.newcastle.edu.au/R/help/06/01/18259.html
+
+  [[http://cran.r-project.org/web/packages/RCurl/index.html][RCurl]], by the way, for the translation roclet; [[http://www.omegahat.org/RCurl/RCurlJSS.pdf][docs]].
+
+  Contrived example for collation, etc.? What about package docs?
+  Let's stay away from OO; though I know, I just know, the
+  motherfuckers will ask about it. Let's stay away.
+
+  In fact, let's just use environments (or, at most, prototypes) and
+  something like inheritParams
+
+  We'll mention that for S4, you need the explicit slots; for S3,
+  there's =@S3method <function> <class>=; also =method <generic>
+  <class>=.
+
+  No, scratch that: a =@slot= doesn't exist. Fuck it, let's punt.
+
+  #+BEGIN_SRC R :tangle random-closure.R :shebang #!/usr/local/bin/R -f
+    library(debug)
+    library(functional)
+    
+    next.random <- function(prev, m, a, c)
+      (a * prev + c) %% m
+    
+    make.random <- function(seed, m, a, c) {
+      function() {
+        seed <<- next.random(seed, m, a, c)
+        seed
+      }
+    }
+    
+    ##' @inheritParams make.random
+    make.pathological.random <-
+      Curry(make.random,
+            m=10,
+            a=7,
+            c=7)
+    
+    make.numerical.recipes.random <-
+      Curry(make.random,
+            m=2**32,
+            a=1664525,
+            c=1013904223)
+    
+    make.knuth.random <-
+      Curry(make.random,
+            m=as.numeric(2**64),
+            a=as.numeric(6364136223846793005),
+            c=as.numeric(1442695040888963407))
+    
+    r <- make.random(7, 10, 7, 7)
+    replicate(10, r())
+    
+    pathological <- make.pathological.random(7)
+    replicate(10, pathological())
+    
+    knuth <- make.knuth.random(7)
+    replicate(10, knuth())
+    
+    recipes <- make.numerical.recipes.random(7)
+    replicate(10, recipes())
+    
+  #+END_SRC
+
+  This above is nice because it's clean, reproducible, interesting;
+  makes me pine for bigint; and, if we refrain from Curry-shenanigans,
+  should be able to get some =@inheritParams= out of it.
+
+  Maybe =next.random=, =make.random=; document them; then the
+  specializations with =inheritParams=.
+
+  Do an inventory of all the features I'd like to show:
+
+  - =@examples=
+    - =@examples= is inline; =@example= is external.
+  - =@family=
+    - Let's familize (sic) the e.g. specializations.
+  - =@inheritParams=
+    - Specializations
+    - NB: Does not work with =Curry=; we'll have to find another
+      excuse to =@import=?
+  - =@author=
+  - =@param=
+  - =@return=
+  - =@include=
+    - Let's put e.g. specializations in their own file.
+  - =@export=
+    - Need methods that we're not exporting; show the transition from
+      export all to export explicitly.
+  - =@import=
+  - =@template=?
+    - Meh.
+
+  It's too bad the fuckers disabled callgraphs; vanity, but cool.
+
+  Package docs for e.g. Roxygen:
+
+  #+BEGIN_SRC R
+    ##' In-line documentation for R.
+    ##' 
+    ##' Roxygen is a Doxygen-like documentation system for R; allowing
+    ##' in-source specification of Rd files, collation and namespace
+    ##' directives.
+    ##'
+    ##' @name roxygen
+    ##' @docType package
+    ##' @title Literate Programming in R
+    ##' @keywords package
+    ##' @examples
+    ##' \dontrun{roxygenize('pkg')}
+    ##' @seealso See \code{\link{namespace_roclet}}, 
+    ##' \code{\link{collate_roclet}}, 
+    ##' for an overview of roxygen tags.
+    NULL
+  #+END_SRC
+
+  Let's come up with a minimum subset. Double-hash, by the way, since
+  they're top-level comments.
+
+  Maybe go straight to package from next.random; the next.random and
+  make.random source files are a little weird, aren't they?
+
+  Show =roxygenize=, then switch to =document= in devtools?
+
+* TODO Class which retains state: e.g. seed and last random.
+* TODO [[https://github.com/hadley/devtools][devtools]]?
+* Live coding, insofar as we can get away with it.
+  Performance; uncaptured, though. Camera, plus some kind of Linux
+  thing; or something that multiplexes from the laptop?
