@@ -73,6 +73,8 @@
 
   Can we submit something to CRAN before the talk? Yikes. Don't forget
   about devtool's =install_github=.
+
+  Reluctantly do templates and S4 like we promised? No, forebear.
 * TODO Some relatively interesting but elegant algorithm
   Have we exhausted SICP? Monte Carlo pi; some iterative derivative;
   maybe a Knuthian random number generator based on some magical
