@@ -24,8 +24,12 @@
     
     source('google-key.R')
     
-    fromJSON(getURL(sprintf('https://www.googleapis.com/language/translate/v2/detect?key=%s&q=hello%%20world',
-                            google.key)))
+    detect.source <- function(query, google.key=getOption('google.key'))
+      fromJSON(getURL(sprintf('https://www.googleapis.com/language/translate/v2/detect?key=%s&q=%s',
+                              google.key,
+                              curlEscape(query))))[[1]]$detections[[1]][[1]]$language
+    
+    detect.source('hello world')
     
   #+END_SRC
 
