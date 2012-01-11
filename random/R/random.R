@@ -1,3 +1,14 @@
+##' Linear congruential generators
+##'
+##' Linear congruential generators with some Knuthian and other
+##' specializations
+##'
+##' @name random
+##' @title Linear congruential generators
+##' @docType package
+NULL
+
+
 ##' Generate the next number in the cycle by the "mixed congruential
 ##' method."
 ##' @param prev Previous random number

@@ -1,3 +1,4 @@
+* TODO Add =generators.R= and other =.Rd=.
 * TODO Back-up internet
   Need to jailbreak our phone or at least have the wireless-proxy.
 * TODO Translation roclet
@@ -375,6 +376,8 @@
 
   Let's create the complete example (including e.g. roclet); then
   practice delivering it live.
+
+  Should we call it LCG instead?
 * TODO Class which retains state: e.g. seed and last random.
 * TODO [[https://github.com/hadley/devtools][devtools]]?
 * Live coding, insofar as we can get away with it.

@@ -9,4 +9,3 @@ Description: More about what it does (maybe more than one line)
 License: GPL
 Collate:
     'random.R'
-    'generators.R'

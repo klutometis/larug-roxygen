@@ -19,9 +19,4 @@
 \description{
   Make a linear congruential generator (LCG).
 }
-\seealso{
-  Other lcg: \code{\link{make.knuth.random}},
-  \code{\link{make.numerical.recipes.random}},
-  \code{\link{make.pathological.random}}
-}
 
