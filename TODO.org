@@ -1,4 +1,5 @@
-* TODO Add =generators.R= and other =.Rd=.
+* DONE Add =generators.R= and other =.Rd=.
+  CLOSED: [2012-01-11 Wed 08:08]
 * TODO Back-up internet
   Need to jailbreak our phone or at least have the wireless-proxy.
 * TODO Translation roclet
@@ -65,9 +66,8 @@
       Map(as.vector,
           getJSON(translate.url(query, source, target, key))$data$translations)
     
-    ## debug(google.url(method='detect', query='champagne'))
-    ## debug(detect.source('champagne'))
-    ## debug(languages(target='de'))
+    debug(detect.source('champagne'))
+    debug(languages(target='de'))
     debug(translate('hello, world', 'en', 'de'))
     
   #+END_SRC
