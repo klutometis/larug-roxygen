@@ -76,7 +76,10 @@
   about devtool's =install_github=.
 
   Reluctantly do templates and S4 like we promised? No, forebear.
-* TODO Some relatively interesting but elegant algorithm
+* DONE Some relatively interesting but elegant algorithm
+  CLOSED: [2012-01-11 Wed 00:22]
+  - CLOSING NOTE [2012-01-11 Wed 00:22] \\
+    Linear congruential generators (LCG)
   Have we exhausted SICP? Monte Carlo pi; some iterative derivative;
   maybe a Knuthian random number generator based on some magical
   co-primes (i.e. linear congruential method); Neumann's
@@ -378,8 +381,12 @@
   practice delivering it live.
 
   Should we call it LCG instead?
-* TODO Class which retains state: e.g. seed and last random.
-* TODO [[https://github.com/hadley/devtools][devtools]]?
+* DONE Class which retains state: e.g. seed and last random.
+  CLOSED: [2012-01-11 Wed 00:21]
+* DONE [[https://github.com/hadley/devtools][devtools]]?
+  CLOSED: [2012-01-11 Wed 00:21]
+  - CLOSING NOTE [2012-01-11 Wed 00:21] \\
+    Yes
 * Live coding, insofar as we can get away with it.
   Performance; uncaptured, though. Camera, plus some kind of Linux
   thing; or something that multiplexes from the laptop?
