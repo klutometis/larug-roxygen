@@ -18,7 +18,14 @@
     curl "https://www.googleapis.com/language/translate/v2/detect?key=$GOOGLE_KEY&q=hello%20world"
   #+END_SRC
 
-  #+BEGIN_SRC R :tangle translate.R :shebang #!/usr/bin/env
+  #+BEGIN_SRC R :tangle translate.R :shebang #!/usr/local/bin/R -f
+    library(RCurl)
+    library(RJSONIO)
+    
+    source('google-key.R')
+    
+    fromJSON(getURL(sprintf('https://www.googleapis.com/language/translate/v2/detect?key=%s&q=hello%%20world',
+                            google.key)))
     
   #+END_SRC
 
