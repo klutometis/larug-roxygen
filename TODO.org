@@ -21,19 +21,58 @@
   #+BEGIN_SRC R :tangle translate.R :shebang #!/usr/local/bin/R -f
     library(RCurl)
     library(RJSONIO)
+    library(lisp)
+    library(debug)
+    library(functional)
     
     source('google-key.R')
     
-    detect.source <- function(query, google.key=getOption('google.key'))
-      fromJSON(getURL(sprintf('https://www.googleapis.com/language/translate/v2/detect?key=%s&q=%s',
-                              google.key,
-                              curlEscape(query))))[[1]]$detections[[1]][[1]]$language
+    google.base <- 'https://www.googleapis.com/language/translate/v2%s?key=%s%s%s%s'
     
-    detect.source('hello world')
+    google.url <- function(method=NULL,
+                           query=NULL,
+                           source=NULL,
+                           target=NULL,
+                           key=getOption('google.key'))
+      sprintf(google.base,
+              ifelse(is.null(method), '', sprintf('/%s', method)),
+              key,
+              ifelse(is.null(query), '', sprintf('&q=%s', curlEscape(query))),
+              ifelse(is.null(source), '', sprintf('&source=%s', source)),
+              ifelse(is.null(target), '', sprintf('&target=%s', target)))
+    
+    getJSON <- Compose(getURL, fromJSON)
+    
+    get.key.option <- function() getOption('google.key')
+    
+    detect.source.url <- Curry(google.url, method='detect')
+    
+    detect.source <- function(query, key=get.key.option())
+      Map(function(detection) detection$language,
+          car(getJSON(detect.source.url(query=query,
+                                        key=key))$data$detections))
+    
+    languages.url <- Curry(google.url, method='languages')
+    
+    languages <- function(source=NULL, target=NULL, key=get.key.option())
+      Map(as.vector,
+          getJSON(languages.url(source=NULL, target=NULL, key=key))$data$languages)
+    
+    translate.url <- Curry(google.url, method=NULL)
+    
+    translate <- function(query, source, target, key=get.key.option())
+      Map(as.vector,
+          getJSON(translate.url(query, source, target, key))$data$translations)
+    
+    ## debug(google.url(method='detect', query='champagne'))
+    ## debug(detect.source('champagne'))
+    ## debug(languages(target='de'))
+    debug(translate('hello, world', 'en', 'de'))
     
   #+END_SRC
 
-  Can we submit something to CRAN before the talk? Yikes.
+  Can we submit something to CRAN before the talk? Yikes. Don't forget
+  about devtool's =install_github=.
 * TODO Some relatively interesting but elegant algorithm
   Have we exhausted SICP? Monte Carlo pi; some iterative derivative;
   maybe a Knuthian random number generator based on some magical
