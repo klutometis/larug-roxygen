@@ -6,9 +6,7 @@ Date: 2012-01-09
 Author: Who wrote it
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
-License: What license is it under?
-Depends:
-    functional
+License: GPL
 Collate:
-    'next.random.R'
-    'make.random.R'
+    'random.R'
+    'generators.R'

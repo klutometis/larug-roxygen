@@ -1,7 +1,6 @@
 \name{make.pathological.random}
 \alias{make.pathological.random}
-\title{Make a random-number generator with a pathological period
-(i.e. 4).}
+\title{Make an LCG with a pathological period of length 4.}
 \usage{
   make.pathological.random(seed)
 }
@@ -9,7 +8,11 @@
   \item{seed}{The initial seed}
 }
 \description{
-  Make a random-number generator with a pathological period
-  (i.e. 4).
+  Make an LCG with a pathological period of length 4.
+}
+\seealso{
+  Other lcg: \code{\link{make.knuth.random}},
+  \code{\link{make.numerical.recipes.random}},
+  \code{\link{make.random}}
 }
 

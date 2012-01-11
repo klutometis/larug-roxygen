@@ -262,6 +262,8 @@
   - =@import=
   - =@template=?
     - Meh.
+  - =@references=
+    - The wikipedia page and maybe knuth. Bibtex roclet, anyone?
 
   It's too bad the fuckers disabled callgraphs; vanity, but cool.
 
@@ -294,6 +296,8 @@
 
   Show =roxygenize=, then switch to =document= in devtools?
 
+  Let's create the complete example (including e.g. roclet); then
+  practice delivering it live.
 * TODO Class which retains state: e.g. seed and last random.
 * TODO [[https://github.com/hadley/devtools][devtools]]?
 * Live coding, insofar as we can get away with it.
