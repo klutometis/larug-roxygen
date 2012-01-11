@@ -1,3 +1,28 @@
+* TODO Back-up internet
+  Need to jailbreak our phone or at least have the wireless-proxy.
+* TODO Translation roclet
+  #+BEGIN_SRC sh
+    curl "https://www.googleapis.com/language/translate/v2?key=$GOOGLE_KEY&q=hello%20world&source=en&target=de"
+  #+END_SRC
+
+  Programmatically populate languages, or determine whether a
+  combination is possible:
+
+  #+BEGIN_SRC sh
+    curl "https://www.googleapis.com/language/translate/v2/languages?key=$GOOGLE_KEY&target=de"
+  #+END_SRC
+
+  Automatically detect the source (specifying merely the target):
+
+  #+BEGIN_SRC sh
+    curl "https://www.googleapis.com/language/translate/v2/detect?key=$GOOGLE_KEY&q=hello%20world"
+  #+END_SRC
+
+  #+BEGIN_SRC R :tangle translate.R :shebang #!/usr/bin/env
+    
+  #+END_SRC
+
+  Can we submit something to CRAN before the talk? Yikes.
 * TODO Some relatively interesting but elegant algorithm
   Have we exhausted SICP? Monte Carlo pi; some iterative derivative;
   maybe a Knuthian random number generator based on some magical
