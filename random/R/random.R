@@ -1,3 +1,6 @@
+##' @translate en de
+NULL
+
 ##' Linear congruential generators
 ##'
 ##' Linear congruential generators with some Knuthian and other

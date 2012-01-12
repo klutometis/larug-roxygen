@@ -80,6 +80,81 @@
   about devtool's =install_github=.
 
   Reluctantly do templates and S4 like we promised? No, forebear.
+
+  #+BEGIN_SRC R :tangle translation-roclet.R :shebang #!/usr/local/bin/R -f
+    library(debug)
+    library(lisp)
+    library(roxygen2)
+    library(translate)
+    
+    register.preref.parsers(parse.value, 'translate')
+    
+    translate_roclet <- function()
+      new_roclet(list(), "translate")
+    
+    roc_process.translate <- function(roclet, partita, path) {
+      ## debug('process', roclet, partita, path)
+      from <- to <- NULL
+      for (partitum in partita) {
+        ## debug(partitum$introduction)
+        ## partitum$description <- 19999
+        ## partitum$introduction <- 19999
+        ## if (!is.null(partitum$translate)) {
+        ##   from <- partitum$translate$name
+        ##   to <- partitum$translate$description
+        ## }
+        if (!is.null(partitum$translate)) {
+          from.to <- unlist(strsplit(partitum$translate, ' '))
+          from <- car(from.to)
+          to <- cadr(from.to)
+          break
+        }
+      }
+      debug(from, to)
+      nameObject <- deparse(substitute(partita))
+      print(nameObject)
+      ## assign(nameObject,list(),envir=parent.frame())
+      ## for (partitum in partita)
+      ##   if (!is.null(partitum$introduction))
+      ##     partitum$introduction <- 'raggies'
+      ## debug(partita)
+      assign('parsed',
+             Map(function(partitum) {
+               ## partitum$description <- 'raggies'
+               ## debug(partitum)
+               ## debug(partitum$translate)
+               if (!is.null(partitum$introduction) &&
+                   !is.null(from)) {
+                 debug(partitum$introduction, from, to)
+                 translation <- translate(partitum$introduction, from, to)
+                 debug(translation)
+                 partitum$introduction <- translation[[1]]
+               }
+               ## debug(partitum)
+               partitum
+             },
+                 partita),
+             envir=parent.frame())
+      ## assign('parsed', partita, envir=parent.frame())
+    }
+    
+    roc_output.translate <- function(roclet, results, path)
+      ## debug('output', roclet, results, path)
+      NULL
+    
+    ## roxygenize('../translate', roclets=c('translate', 'rd'))
+    roxygenize('random', roclets=c("collate", "namespace", "translate", "rd"))
+    
+  #+END_SRC
+
+  #+BEGIN_SRC R
+    testCarre <- function(x){
+      nameObject <- deparse(substitute(x))
+      print(nameObject)
+      assign(nameObject,x^2,envir=parent.frame())
+      return(invisible())
+    }    
+  #+END_SRC
 * DONE Some relatively interesting but elegant algorithm
   CLOSED: [2012-01-11 Wed 00:22]
   - CLOSING NOTE [2012-01-11 Wed 00:22] \\

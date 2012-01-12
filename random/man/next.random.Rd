@@ -1,7 +1,6 @@
 \name{next.random}
 \alias{next.random}
-\title{Generate the next number in the cycle by the "mixed congruential
-method."}
+\title{Generieren Sie die nächste Zahl in den Zyklus der &quot;mixed Kongruenz-Methode.&quot;}
 \usage{
   next.random(prev, m, a, c)
 }
@@ -18,8 +17,8 @@ method."}
   The number random number in the cycle
 }
 \description{
-  Generate the next number in the cycle by the "mixed
-  congruential method."
+  Generieren Sie die nächste Zahl in den Zyklus der
+  &quot;mixed Kongruenz-Methode.&quot;
 }
 \examples{
 ## Pathological example

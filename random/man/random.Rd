@@ -4,10 +4,7 @@
 \alias{random-package}
 \title{Linear congruential generators}
 \description{
-  Linear congruential generators
-}
-\details{
-  Linear congruential generators with some Knuthian and
-  other specializations
+  Linear Kongruenz Generator linearen Kongruenz-Generatoren
+  mit einigen Knuth und andere Spezialisierungen
 }
 

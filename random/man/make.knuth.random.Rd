@@ -1,6 +1,6 @@
 \name{make.knuth.random}
 \alias{make.knuth.random}
-\title{Make an LCG based on Knuth's heuristics.}
+\title{Machen Sie einen LCG auf Knuth Heuristik basiert.}
 \usage{
   make.knuth.random(seed)
 }
@@ -8,7 +8,7 @@
   \item{seed}{The initial seed}
 }
 \description{
-  Make an LCG based on Knuth's heuristics.
+  Machen Sie einen LCG auf Knuth Heuristik basiert.
 }
 \seealso{
   Other lcg: \code{\link{make.numerical.recipes.random}},
