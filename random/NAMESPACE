@@ -1,0 +1,5 @@
+export(make.knuth.random)
+export(make.numerical.recipes.random)
+export(make.pathological.random)
+export(make.random)
+export(next.random)

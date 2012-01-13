@@ -1,18 +1,14 @@
 \name{make.numerical.recipes.random}
 \alias{make.numerical.recipes.random}
-\title{Machen Sie einen LCG auf die Parameter in Numerical Recipes basiert.}
+\title{Make an LCG based on the parameters in Numerical Recipes.}
 \usage{
-  make.numerical.recipes.random(seed)
-}
-\arguments{
-  \item{seed}{The initial seed}
+  make.numerical.recipes.random()
 }
 \description{
-  Machen Sie einen LCG auf die Parameter in Numerical
-  Recipes basiert.
+  Make an LCG based on the parameters in Numerical Recipes.
 }
 \seealso{
-  Other lcg: \code{\link{make.knuth.random}},
+  Other LCGs: \code{\link{make.knuth.random}},
   \code{\link{make.pathological.random}},
   \code{\link{make.random}}
 }

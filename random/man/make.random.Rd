@@ -1,8 +1,8 @@
 \name{make.random}
 \alias{make.random}
-\title{Machen Sie einen linearen Kongruenz-Generator (LCG).}
+\title{Make a linear congruential generator (LCG).}
 \usage{
-  make.random(seed, m, a, c)
+  make.random(m, a, c, seed = as.numeric(Sys.time()))
 }
 \arguments{
   \item{seed}{The initial seed}
@@ -13,14 +13,11 @@
 
   \item{c}{Increment}
 }
-\value{
-  A thunk which generates random numbers
-}
 \description{
-  Machen Sie einen linearen Kongruenz-Generator (LCG).
+  Make a linear congruential generator (LCG).
 }
 \seealso{
-  Other lcg: \code{\link{make.knuth.random}},
+  Other LCGs: \code{\link{make.knuth.random}},
   \code{\link{make.numerical.recipes.random}},
   \code{\link{make.pathological.random}}
 }

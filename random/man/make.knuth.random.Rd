@@ -1,17 +1,14 @@
 \name{make.knuth.random}
 \alias{make.knuth.random}
-\title{Machen Sie einen LCG auf Knuth Heuristik basiert.}
+\title{Make an LCG based on Knuth's heuristics.}
 \usage{
-  make.knuth.random(seed)
-}
-\arguments{
-  \item{seed}{The initial seed}
+  make.knuth.random()
 }
 \description{
-  Machen Sie einen LCG auf Knuth Heuristik basiert.
+  Make an LCG based on Knuth's heuristics.
 }
 \seealso{
-  Other lcg: \code{\link{make.numerical.recipes.random}},
+  Other LCGs: \code{\link{make.numerical.recipes.random}},
   \code{\link{make.pathological.random}},
   \code{\link{make.random}}
 }

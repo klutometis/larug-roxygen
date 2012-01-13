@@ -6,37 +6,34 @@ NULL
 ##' Linear congruential generators with some Knuthian and other
 ##' specializations
 ##'
-##' @name random
+##' @name random-package
 ##' @title Linear congruential generators
 ##' @docType package
+##' @references \url{http://en.wikipedia.org/wiki/Linear_congruential_generator}
+##' @examples
+##' r <- make.numerical.recipes.random()
+##' replicate(10, r())
 NULL
 
 
-##' Generate the next number in the cycle by the "mixed congruential
-##' method."
+##' Generate the next number in the cycle by the mixed congruential
+##' method.
 ##' @param prev Previous random number
 ##' @param m Modulus
 ##' @param a Multiplier
 ##' @param c Increment
-##' @return The number random number in the cycle
-##' @references \url{http://en.wikipedia.org/wiki/Linear_congruential_generator}
-##' @examples
-##' ## Pathological example
-##' \dontrun{next.random(7, 10, 7, 7)}
+##' @return The next random number in the cycle
+##' @export
 next.random <- function(prev, m, a, c)
   (a * prev + c) %% m
 
 ##' Make a linear congruential generator (LCG).
 ##' @param seed The initial seed
-##' @param m Modulus
-##' @param a Multiplier
-##' @param c Increment
-##' @return A thunk which generates random numbers
-##' @family lcg
+##' @inheritParams next.random
+##' @family LCGs
+##' @export
 make.random <-
-  function(seed, m, a, c) {
-    function() {
-      seed <<- next.random(seed, m, a, c)
-      seed
-    }
+  function(m, a, c, seed=as.numeric(Sys.time())) {
+    function()
+      withVisible(seed <<- next.random(seed, m, a, c))$value
   }

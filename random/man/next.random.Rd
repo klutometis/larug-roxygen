@@ -1,6 +1,7 @@
 \name{next.random}
 \alias{next.random}
-\title{Generieren Sie die nächste Zahl in den Zyklus der &quot;mixed Kongruenz-Methode.&quot;}
+\title{Generate the next number in the cycle by the mixed congruential
+method.}
 \usage{
   next.random(prev, m, a, c)
 }
@@ -14,17 +15,10 @@
   \item{c}{Increment}
 }
 \value{
-  The number random number in the cycle
+  The next random number in the cycle
 }
 \description{
-  Generieren Sie die nächste Zahl in den Zyklus der
-  &quot;mixed Kongruenz-Methode.&quot;
-}
-\examples{
-## Pathological example
-\dontrun{next.random(7, 10, 7, 7)}
-}
-\references{
-  \url{http://en.wikipedia.org/wiki/Linear_congruential_generator}
+  Generate the next number in the cycle by the mixed
+  congruential method.
 }
 
