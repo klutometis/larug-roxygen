@@ -1,8 +1,12 @@
 * DONE Add =generators.R= and other =.Rd=.
   CLOSED: [2012-01-11 Wed 08:08]
-* TODO Back-up internet
+* DONE Back-up internet
+  CLOSED: [2012-01-13 Fri 08:07]
+  - CLOSING NOTE [2012-01-13 Fri 08:07] \\
+    Thank gods the Sprint card came through.
   Need to jailbreak our phone or at least have the wireless-proxy.
-* TODO Translation roclet
+* DONE Translation roclet
+  CLOSED: [2012-01-13 Fri 08:07]
   #+BEGIN_SRC sh
     curl "https://www.googleapis.com/language/translate/v2?key=$GOOGLE_KEY&q=hello%20world&source=en&target=de"
   #+END_SRC
@@ -82,7 +86,6 @@
   Reluctantly do templates and S4 like we promised? No, forebear.
 
   #+BEGIN_SRC R :tangle translation-roclet.R :shebang #!/usr/local/bin/R -f
-    library(debug)
     library(lisp)
     library(roxygen2)
     library(translate)
@@ -93,16 +96,8 @@
       new_roclet(list(), "translate")
     
     roc_process.translate <- function(roclet, partita, path) {
-      ## debug('process', roclet, partita, path)
       from <- to <- NULL
       for (partitum in partita) {
-        ## debug(partitum$introduction)
-        ## partitum$description <- 19999
-        ## partitum$introduction <- 19999
-        ## if (!is.null(partitum$translate)) {
-        ##   from <- partitum$translate$name
-        ##   to <- partitum$translate$description
-        ## }
         if (!is.null(partitum$translate)) {
           from.to <- unlist(strsplit(partitum$translate, ' '))
           from <- car(from.to)
@@ -110,40 +105,23 @@
           break
         }
       }
-      debug(from, to)
-      nameObject <- deparse(substitute(partita))
-      print(nameObject)
-      ## assign(nameObject,list(),envir=parent.frame())
-      ## for (partitum in partita)
-      ##   if (!is.null(partitum$introduction))
-      ##     partitum$introduction <- 'raggies'
-      ## debug(partita)
-      assign('parsed',
-             Map(function(partitum) {
-               ## partitum$description <- 'raggies'
-               ## debug(partitum)
-               ## debug(partitum$translate)
-               if (!is.null(partitum$introduction) &&
-                   !is.null(from)) {
-                 debug(partitum$introduction, from, to)
-                 translation <- translate(partitum$introduction, from, to)
-                 debug(translation)
-                 partitum$introduction <- translation[[1]]
-               }
-               ## debug(partitum)
-               partitum
-             },
-                 partita),
-             envir=parent.frame())
-      ## assign('parsed', partita, envir=parent.frame())
+    
+      partita <- Map(function(partitum) {
+        if (!is.null(partitum$introduction) &&
+            !is.null(from)) {
+          translation <- translate(partitum$introduction, from, to)
+          partitum$introduction <- translation[[1]]
+        }
+        partitum
+      }, partita)
+    
+      assign('parsed', partita, envir=parent.frame())
     }
     
-    roc_output.translate <- function(roclet, results, path)
-      ## debug('output', roclet, results, path)
-      NULL
+    roc_output.translate <- function(...) NULL
     
-    ## roxygenize('../translate', roclets=c('translate', 'rd'))
-    roxygenize('random', roclets=c("collate", "namespace", "translate", "rd"))
+    roxygenize('random',
+               roclets=c("collate", "namespace", "translate", "rd"))
     
   #+END_SRC
 

@@ -1,0 +1,7 @@
+Code for the [[http://www.meetup.com/LAarea-R-usergroup/events/40337622/][LA R Users Group talk]] on Roxygen:
+
+  - =random= :: A trivial package to demonstrate some of the new
+                features of roxygen (e.g. =inheritParams=, =family=).
+  - =translation-roclet.R= :: Using the [[https://github.com/klutometis/R-translate][translate]] package, show how to
+       write a roclet that translates package docs using the Google
+       Translate API.

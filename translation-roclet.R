@@ -1,3 +1,5 @@
+#!/usr/local/bin/R -f
+
 library(lisp)
 library(roxygen2)
 library(translate)
